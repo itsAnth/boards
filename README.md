@@ -3,6 +3,8 @@
 By Anthony McLeod
 <br>
 The write up is available below and on Google Docs [here](https://docs.google.com/document/d/16Mlt-OLT3XrscHIK0R0QOyE719k6n8JWnm5Jvy-DY5Q/edit?usp=sharing)
+<br>
+A deployed version of the application is available [here](https://salty-scrubland-87928.herokuapp.com/)
 
 ## Installation
 
