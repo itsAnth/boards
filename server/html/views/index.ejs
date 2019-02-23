@@ -2,13 +2,17 @@
 <html>
 <head>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/public/css/product.css">
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    var publicKey = '<%= publicKey %>';
+  </script>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>BoardShop</title>
 
@@ -16,15 +20,15 @@
 </head>
 <body>
   <nav class="site-header sticky-top py-1">
-    <div class="container d-flex justify-content-between cartLevel">
+    <div class="container d-flex justify-content-between">
       <div>
         <a class="navbar-brand" href="#">
           <img src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/227/1718625227_17b571c7-35c0-42f0-a63d-9e0242044e68.png?cb=1550802317" height="30" class="d-inline-block align-top" alt="">
         </a>
       </div>
       <div >
-        <button class="btn btn-outline-primary my-2 my-sm-1" type="button" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus."><i class="fas fa-shopping-cart"></i> Cart</button>
+        <button class="btn btn-outline-primary" id="cartButton" data-html="true" data-toggle="popover" data-placement="bottom" data-content="<p class='my-2'>The cart is empty</p>"><i class="fas fa-shopping-cart"></i> Cart</button>
+        <!-- <a tabindex="0" class="btn btn-outline-primary text-primary cartButton" id="cartButton" role="button" data-html="true" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="<p class='my-2'>The cart is empty</p>"><i class="fas fa-shopping-cart"></i> Cart</a> -->
       </div>
     </div>
   </nav>
@@ -37,7 +41,21 @@ sagittis lacus vel augue laoreet rutrum faucibus."><i class="fas fa-shopping-car
   </div>
 
   <div class="d-lg-flex flex-lg-equal w-100 my-md-3 pl-md-3">
-  <% for(var i=0; i<3; i++) { %>
+    <% for(var i=0; i<3; i++) { %>
+    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden w-100"> 
+      <div class="my-3 p-3">
+        <h2 class="display-5" id="name_<%= boards[i].id %>"><%= boards[i].name %></h2>
+        <p class="lead"><%= boards[i].description %></p>
+        <img id="image_<%= boards[i].id %>" style="mix-blend-mode: multiply;" src="/public/images/snowboards/board_<%= boards[i].id %>.jpg"/>
+        <p class="lead mt-2" id="price_<%= boards[i].id %>">$<%= boards[i].price %></p>
+        <a class="btn btn-outline-secondary addRemoveItem" id="addRemove_<%= boards[i].id %>">Add to Cart</a>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <div class="d-lg-flex flex-lg-equal w-100 my-md-3 pl-md-3">
+    <% for(var i=3; i<6; i++) { %>
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden w-100"> 
       <div class="my-3 p-3">
         <h2 class="display-5"><%= boards[i].name %></h2>
@@ -47,12 +65,12 @@ sagittis lacus vel augue laoreet rutrum faucibus."><i class="fas fa-shopping-car
         <a class="btn btn-outline-secondary addCart" id="add_<%= boards[i].id %>">Add to Cart</a>
         <a class="btn btn-outline-secondary disabled" id="added_<%= boards[i].id %>" hidden="true">Added</a>
       </div>
-      </div>
+    </div>
     <% } %>
   </div>
 
-    <div class="d-lg-flex flex-lg-equal w-100 my-md-3 pl-md-3">
-  <% for(var i=3; i<6; i++) { %>
+  <div class="d-lg-flex flex-lg-equal w-100 my-md-3 pl-md-3">
+    <% for(var i=6; i<9; i++) { %>
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden w-100"> 
       <div class="my-3 p-3">
         <h2 class="display-5"><%= boards[i].name %></h2>
@@ -62,33 +80,12 @@ sagittis lacus vel augue laoreet rutrum faucibus."><i class="fas fa-shopping-car
         <a class="btn btn-outline-secondary addCart" id="add_<%= boards[i].id %>">Add to Cart</a>
         <a class="btn btn-outline-secondary disabled" id="added_<%= boards[i].id %>" hidden="true">Added</a>
       </div>
-      </div>
+    </div>
     <% } %>
   </div>
-
-    <div class="d-lg-flex flex-lg-equal w-100 my-md-3 pl-md-3">
-  <% for(var i=6; i<9; i++) { %>
-    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden w-100"> 
-      <div class="my-3 p-3">
-        <h2 class="display-5"><%= boards[i].name %></h2>
-        <p class="lead"><%= boards[i].description %></p>
-        <img style="mix-blend-mode: multiply;" src="/public/images/snowboards/board_<%= boards[i].id %>.jpg"/>
-        <p class="lead mt-2">$<%= boards[i].price %></p>
-        <a class="btn btn-outline-secondary addCart" id="add_<%= boards[i].id %>">Add to Cart</a>
-        <a class="btn btn-outline-secondary disabled" id="added_<%= boards[i].id %>" hidden="true">Added</a>
-      </div>
-      </div>
-    <% } %>
-  </div>
-
-<div class="cart" style="z-index: -1"></div>
   
   <footer class="container py-5">
     <div class="row">
-      <div class="col-12 col-md">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-        <small class="d-block mb-3 text-muted">&copy; 2017-{{ site.time | date: "%Y" }}</small>
-      </div>
       <div class="col-6 col-md">
         <h5>Features</h5>
         <ul class="list-unstyled text-small">
@@ -128,6 +125,8 @@ sagittis lacus vel augue laoreet rutrum faucibus."><i class="fas fa-shopping-car
         </ul>
       </div>
     </div>
+    <div class="row justify-content-center">
+      <p class="linkMe">Created by <a href="http://anthonymcleod.com/">Anthony McLeod</a><p></div>
   </footer>
   <script src="/public/js/front_controller.js"></script>
 </body>

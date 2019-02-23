@@ -52,7 +52,7 @@ var logger = {
       .map(function(arg) {
         arg = arg.stack || arg;
         var name = arg.name || '[ ! DETAILS ! ]';
-        var log = name.yellow + '  ' + arg.orange;
+        var log = name.yellow + '  ' + arg.cyan;
         return log;
       });
 

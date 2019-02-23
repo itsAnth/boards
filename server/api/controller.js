@@ -2,76 +2,124 @@ var _ = require('lodash');
 var path    = require("path");
 var config = require('../../config/config');
 var logger = require('../util/logger');
+require('dotenv').config();
+
+var stripe = require("stripe")(process.env.SECRET_KEY);
+
+var data = {
+	publicKey:process.env.PUBLISHABLE_KEY,
+	boards: [
+	{
+		id: 1,
+		price: 100,
+		name: 'Burton',
+		description:'All mountain board for the beginner',
+		added: true
+	},
+	{
+		id: 2,
+		price: 100,
+		name: 'Sapient',
+		description:'Freestyle board for terrain park',
+		added: false
+	},
+	{
+		id: 3,
+		price: 100,
+		name: 'Rome Gang',
+		description:'Our most popular all mountain board',
+		added: false
+	},
+	{
+		id: 4,
+		price: 100,
+		name: 'DC',
+		description:'Freestyle board, ideal for doing tricks',
+		added: false
+	},
+	{
+		id: 5,
+		price: 100,
+		name: 'LIB Tech',
+		description:'Light, short freestyle board',
+		added: false
+	},
+	{
+		id: 6,
+		price: 100,
+		name: 'K2',
+		description:'Powder board for deep powder',
+		added: false
+	},
+	{
+		id: 7,
+		price: 100,
+		name: 'Chamonix',
+		description:'Freeride board for going fast',
+		added: false
+	},
+	{
+		id: 8,
+		price: 100,
+		name: 'GNU',
+		description:'Freestyle board for pro riders',
+		added: false
+	},
+	{
+		id: 9,
+		price: 100,
+		name: 'LIB Tech',
+		description:'All mountain board for experienced riders',
+		added: false
+	}
+	]
+}
+
+exports.params = function(req, res, next, term) {;
+	req.term = term.split('+');
+	next();
+};
 
 exports.home = function(req, res, next) {
 
-	var data = {
-		boards: [
-			{
-				id: 1,
-				price: 299,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: true
-			},
-			{
-				id: 2,
-				price: 299,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 3,
-				price: 399,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 4,
-				price: 299,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 5,
-				price: 499,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 6,
-				price: 599,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 7,
-				price: 599,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 8,
-				price: 699,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			},
-			{
-				id: 9,
-				price: 799,
-				name: 'Sapient',
-				description:'For the beginner',
-				added: false
-			}
-		]
+	res.render("index", data);
+};
+
+exports.getId = function(req, res, next) {
+	let cartData = [];
+	let hostUrl = req.protocol + '://' + req.get('host');
+
+	for (var i = 0; i < req.term.length; i++) {
+		let index = parseInt(req.term[i]-1);
+		let item = {
+			amount: data.boards[index].price*100,
+			quantity: 1,
+			name: data.boards[index].name,
+			currency: "usd"
+		}
+		cartData.push(item);
 	}
 
-    res.render("index", data);
-};
+	stripe.checkout.sessions.create(
+	{
+		success_url: hostUrl + "/success",
+		cancel_url: hostUrl,
+		payment_method_types: ["card"],
+		line_items: cartData
+	},
+	{stripe_version: "2018-11-08; checkout_sessions_beta=v1"},
+	function(err, session) {
+	    // asynchronously called
+	    console.log(session);
+	    var oRes = {
+			id: session.id
+		};
+		var sResponse = JSON.stringify(oRes);
+		res.type('json');
+		res.status(200).send(sResponse);
+	});
+}
+
+exports.success = function(req, res, next) {
+	res.render("success");
+}

@@ -27,19 +27,27 @@
   background-size: cover;
 }
 
-.cartLevel {
-  position: relative;
+.smallImage {
+  height:40px;
 }
 
-.cart {
-  height:100px;
-  width:100px;
-  background-color: blue;
-  position: absolute;
-  bottom: 10px;
-  right:0px;
+a.cartButton:hover, a.checkout:hover {
+  color:white !important;
 }
 
+.cartPopover {
+  width: 200px;
+  margin: auto;
+}
+
+.total {
+  text-align: center;
+  font-weight: bold;
+}
+
+.linkMe {
+  text-align: center;
+}
 
 /*
  * Dummy devices (replace them with your own or something else entirely!)
