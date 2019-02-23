@@ -69,29 +69,36 @@ $(function () {
 	$(function(){
 		$(document).on('click',"#checkout",function () {
 	      //window.location.href = window.location.origin + '/checkout/' + cart.join('+');
-	      $.ajax({
-	      	url: window.location.origin + '/id/' + cart.join('+'),
-		    // jQuery < 1.9.0 -> use type
-		    // jQuery >= 1.9.0 -> use method
-		    method: 'GET', // method is any HTTP method
-		    success: function(session) {
-		    	var stripe = Stripe(
-		    		publicKey,
-		    		{
-		    			betas: ['checkout_beta_4']
-		    		}
-	    		);
+	 //      $.ajax({
+	 //      	url: window.location.origin + '/id/' + cart.join('+'),
+		//     // jQuery < 1.9.0 -> use type
+		//     // jQuery >= 1.9.0 -> use method
+		//     method: 'GET', // method is any HTTP method
+		//     success: function(session) {
+		//     	var stripe = Stripe(
+		//     		publicKey,
+		//     		{
+		//     			betas: ['checkout_beta_4']
+		//     		}
+	 //    		);
 
-		    	stripe.redirectToCheckout({
-		    		sessionId: session.id,
-		    	}).then(function (result) {
-  				// Display result.error.message to your customer
-				});
-		    },
-		    error: function(err) {
-		    	console.log("error")
-		    }
-		});
+		//     	stripe.redirectToCheckout({
+		//     		sessionId: session.id,
+		//     	}).then(function (result) {
+  // 				// Display result.error.message to your customer
+  // 				console.log(result);
+  // 				alert("hi")
+		// 		});
+		//     },
+		//     error: function(err) {
+		//     	console.log("error")
+		//     }
+		// });
+
+		window.location.href = window.location.origin + '/checkout/' + cart.join('+');
+
+
+		
 	  });
 	});
 

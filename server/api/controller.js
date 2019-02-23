@@ -109,8 +109,6 @@ exports.getId = function(req, res, next) {
 	},
 	{stripe_version: "2018-11-08; checkout_sessions_beta=v1"},
 	function(err, session) {
-	    // asynchronously called
-	    console.log(session);
 	    var oRes = {
 			id: session.id
 		};
@@ -120,6 +118,47 @@ exports.getId = function(req, res, next) {
 	});
 }
 
+
+exports.checkout = function(req, res, next) {
+	let cartData = {
+		publicKey:process.env.PUBLISHABLE_KEY,
+		boards:[],
+		total: 0,
+		sTotal:0
+	};
+
+	for (var i = 0; i < req.term.length; i++) {
+		let index = parseInt(req.term[i]-1);
+		cartData.boards.push(data.boards[index]);
+		cartData.total += data.boards[index].price;
+		cartData.sTotal += data.boards[index].price*100;
+	}
+	res.render("checkout", cartData);
+}
+
+exports.charge = function(req, res, next) {
+	const token = req.body.stripeToken; // Using Express
+	const price = req.body.price;
+	(async () => {
+	  const charge = await stripe.charges.create({
+	    amount: price*100,
+	    currency: 'usd',
+	    description: 'Boards',
+	    source: token,
+	  }, function(err, d) {
+	  	let id = d.id;
+	  	res.redirect('/success?id=' + id + '&price=' + price);
+	  });
+	})()
+}
+
 exports.success = function(req, res, next) {
-	res.render("success");
+	let id = req.query.id;
+	let price =  req.query.price;
+	let temp = {
+		id:id,
+		price: price
+	};
+	console.log(temp);
+	res.render("success", temp);
 }

@@ -2,8 +2,15 @@ var router = require('express').Router();
 var controller = require('./controller');
 
 router.param('term', controller.params);
-router.route('/success/').get(controller.success);
+
+router.route('/success').get(controller.success);
+
 router.route('/id/:term').get(controller.getId);
+
+router.route('/checkout/:term').get(controller.checkout);
+
+router.route('/charge').post(controller.charge);
+
 router.route('/').get(controller.home);
 
 router.route('*').all(function(req, res) {

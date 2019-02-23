@@ -23,7 +23,7 @@
     <div class="container d-flex justify-content-between">
       <div>
         <a class="navbar-brand" href="#">
-          <img src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/227/1718625227_17b571c7-35c0-42f0-a63d-9e0242044e68.png?cb=1550802317" height="30" class="d-inline-block align-top" alt="">
+          <img src="/public/images/boards.png" height="30" class="d-inline-block align-top" alt="">
         </a>
       </div>
       <div >
@@ -58,12 +58,11 @@
     <% for(var i=3; i<6; i++) { %>
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden w-100"> 
       <div class="my-3 p-3">
-        <h2 class="display-5"><%= boards[i].name %></h2>
+        <h2 class="display-5" id="name_<%= boards[i].id %>"><%= boards[i].name %></h2>
         <p class="lead"><%= boards[i].description %></p>
-        <img style="mix-blend-mode: multiply;" src="/public/images/snowboards/board_<%= boards[i].id %>.jpg"/>
-        <p class="lead mt-2">$<%= boards[i].price %></p>
-        <a class="btn btn-outline-secondary addCart" id="add_<%= boards[i].id %>">Add to Cart</a>
-        <a class="btn btn-outline-secondary disabled" id="added_<%= boards[i].id %>" hidden="true">Added</a>
+        <img id="image_<%= boards[i].id %>" style="mix-blend-mode: multiply;" src="/public/images/snowboards/board_<%= boards[i].id %>.jpg"/>
+        <p class="lead mt-2" id="price_<%= boards[i].id %>">$<%= boards[i].price %></p>
+        <a class="btn btn-outline-secondary addRemoveItem" id="addRemove_<%= boards[i].id %>">Add to Cart</a>
       </div>
     </div>
     <% } %>
@@ -73,12 +72,11 @@
     <% for(var i=6; i<9; i++) { %>
     <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden w-100"> 
       <div class="my-3 p-3">
-        <h2 class="display-5"><%= boards[i].name %></h2>
+        <h2 class="display-5" id="name_<%= boards[i].id %>"><%= boards[i].name %></h2>
         <p class="lead"><%= boards[i].description %></p>
-        <img style="mix-blend-mode: multiply;" src="/public/images/snowboards/board_<%= boards[i].id %>.jpg"/>
-        <p class="lead mt-2">$<%= boards[i].price %></p>
-        <a class="btn btn-outline-secondary addCart" id="add_<%= boards[i].id %>">Add to Cart</a>
-        <a class="btn btn-outline-secondary disabled" id="added_<%= boards[i].id %>" hidden="true">Added</a>
+        <img id="image_<%= boards[i].id %>" style="mix-blend-mode: multiply;" src="/public/images/snowboards/board_<%= boards[i].id %>.jpg"/>
+        <p class="lead mt-2" id="price_<%= boards[i].id %>">$<%= boards[i].price %></p>
+        <a class="btn btn-outline-secondary addRemoveItem" id="addRemove_<%= boards[i].id %>">Add to Cart</a>
       </div>
     </div>
     <% } %>
