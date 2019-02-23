@@ -1,7 +1,8 @@
 # Boards - Ecommerce Site
 
 By Anthony McLeod
-The write up is available below and on Google Docs (here)[https://docs.google.com/document/d/16Mlt-OLT3XrscHIK0R0QOyE719k6n8JWnm5Jvy-DY5Q/edit?usp=sharing]
+<br>
+The write up is available below and on Google Docs [here](https://docs.google.com/document/d/16Mlt-OLT3XrscHIK0R0QOyE719k6n8JWnm5Jvy-DY5Q/edit?usp=sharing)
 
 ## Installation
 
