@@ -5,7 +5,7 @@ router.param('term', controller.params);
 
 router.route('/success').get(controller.success);
 
-router.route('/id/:term').get(controller.getId);
+//router.route('/id/:term').get(controller.getId);
 
 router.route('/checkout/:term').get(controller.checkout);
 
