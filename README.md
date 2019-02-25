@@ -56,22 +56,24 @@ The application was deployed to Heroku and is available here: https://salty-scru
  
 ### Approach
 I began by briefly reviewing the quick start guide and the Stripe API documentation to understand how the checkout process worked. In addition to the guides, I reviewed a few examples to better understand the checkout process.
-Next, I constructed the front-end with functionality to add and remove items from the cart. I then implemented Stripe’s Checkout API, that redirected the user to a Stripe checkout page. After completing the transaction, the Stripe checkout page redirected the user back to my website. However, I had difficulty retrieving the transaction ID with this architecture. I modified my checkout process to use the Stripe API to charge the user’s credit card on my web server. The returned data object included the transaction id, which was then displayed to the user.
+
+Next, I constructed the front-end with functionality to add and remove items from the cart. I then implemented Stripe’s Checkout API, that redirected the user to a Stripe checkout page. After completing the transaction, the Stripe checkout page redirects the user back to my website. However, I had difficulty retrieving the transaction ID with this architecture. I modified my checkout process to use the Stripe API to charge the user’s credit card on my web server. The returned data object included the transaction id, which was then displayed to the user.
 
 ### Language/Framework
-The application was developed primarily with JavaScript. I leveraged the Node.js platform and a popular web service framework, Express.js. I selected Node.js because I am conformable developing in JavaScript and it is supported by Stripe. Specifically, I used the npm stripe package. The front-end was developed with Bootstrap because it contains numerous web ready-to-use components. In conjunction with Bootstrap, I used EJS I used to dynamically render components on the screen, such as products and items in the cart on the checkout page.
+The application was developed primarily with JavaScript. I leveraged the Node.js platform and a popular web service framework, Express.js. I selected Node.js because I am conformable developing in JavaScript and it is supported by Stripe. Specifically, I used the npm stripe package. The front-end was developed with Bootstrap because it contains numerous web ready-to-use components. In conjunction with Bootstrap, I used EJS to dynamically render components on the screen, such as products and items in the cart on the checkout page.
 
-Once completed, I deployed the application on Heroku because I had prior development experience with the Heroku platform. For convenience, I have included the link here: https://salty-scrubland-87928.herokuapp.com/.
+Once completed, I deployed the application on Heroku because it does not require a considerable amount of setup or configuration. For convenience, I have included the link here: https://salty-scrubland-87928.herokuapp.com/.
 
 ### Future Considerations / Improvements
-The application could be improved in several ways, including shipping, account management, email notifications, coupon redemption, and mobile support.
+The application could be improved in several ways, including shipping, account management, data persistence, email notifications, coupon redemption, mobile support, and international support
 
-Currently, the user does not enter any shipping information, which is required for real ecommerce transactions involving physical products. I would extend the application by collecting the relevant shipping information in the checkout process. The application could estimate shipping costs based on the delivery address.
+Currently, the user does not enter any shipping information, which is required for real ecommerce transactions involving physical products. I would extend the application by collecting the relevant shipping information in the checkout process. The application could estimate shipping costs based on the delivery address. Moreover, local tax charges could be calculated and added to the total at checkout.
 
 The user does not have an option to login and create an account, which could streamline future transactions. In the future, I would include an account management system, allowing the user to enter his or her account with an email and password or username and password.
 If we collected the user’s email address, we could leverage email services to email the user with a summary of his or her purchase. We could also include promotions or discount codes that could be used in future transactions.
 
 The checkout process does not allow the user to enter any discount codes. This functionality can be added to the Stripe checkout process in the future.
 
-The application front-end is not optimized for mobile. In the future, I would add optimize the screen components for tables and phones.
+The application front-end is not optimized for mobile. In the future, I would add support for smaller screen sizes.
 
+A real ecommerce website may optimize its product page for different markets, or translate the text to other languages. This functionality does not exist in the current application but an internationalization file could be added to dynamically render product text for non English speaking countries.
