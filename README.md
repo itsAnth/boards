@@ -65,15 +65,9 @@ The application was developed primarily with JavaScript. I leveraged the Node.js
 Once completed, I deployed the application on Heroku because it does not require a considerable amount of setup or configuration. For convenience, I have included the link here: https://salty-scrubland-87928.herokuapp.com/.
 
 ### Future Considerations / Improvements
-The application could be improved in several ways, including shipping, account management, data persistence, email notifications, coupon redemption, mobile support, and international support
+The user does not have an option to signup and create an account, which could streamline transactions. In the future, I would include an account management system, allowing the user to login to his or her account with an email and password. If we collected the user’s email address, we could leverage email services to provide the user with a summary of his or her purchases. We could include promotions or discount codes to incentivize future transactions.
 
-Currently, the user does not enter any shipping information, which is required for real ecommerce transactions involving physical products. I would extend the application by collecting the relevant shipping information in the checkout process. The application could estimate shipping costs based on the delivery address. Moreover, local tax charges could be calculated and added to the total at checkout.
+The product catalog and descriptions are stored in a JSON object on the application server. A more robust application would contain a database with several tables for inventory, transactions, customers, etc.
 
-The user does not have an option to login and create an account, which could streamline future transactions. In the future, I would include an account management system, allowing the user to enter his or her account with an email and password or username and password.
-If we collected the user’s email address, we could leverage email services to email the user with a summary of his or her purchase. We could also include promotions or discount codes that could be used in future transactions.
+Several other features could be added, including shipping, email notifications, coupon redemption, mobile support, and international support. Currently, the user does not enter any shipping information, which is required for real ecommerce transactions involving physical products. I would extend the application by collecting the relevant shipping information in the checkout process. The application could estimate shipping costs based on the delivery address. Moreover, local tax charges could be calculated and added to the total at checkout. A real ecommerce website may optimize its product page for different markets, or translate the text to other languages. This functionality does not exist in the current application but an internationalization file could be added to dynamically render product text for the local language.
 
-The checkout process does not allow the user to enter any discount codes. This functionality can be added to the Stripe checkout process in the future.
-
-The application front-end is not optimized for mobile. In the future, I would add support for smaller screen sizes.
-
-A real ecommerce website may optimize its product page for different markets, or translate the text to other languages. This functionality does not exist in the current application but an internationalization file could be added to dynamically render product text for non English speaking countries.
